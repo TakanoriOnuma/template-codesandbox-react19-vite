@@ -30,3 +30,16 @@ GitHub 側に push するたびに、テンプレートは次回アクセス時�
 
 テンプレートのタイトルや説明、タグは `.codesandbox/template.json` で設定しています。
 テンプレート検索に公開したい場合は `published` を `true` にしてください。
+
+### ブラウザ Sandbox として開くための設定
+
+CodeSandbox は `vite` が依存関係にあると自動で VM Sandbox (Devbox) と判定します。
+`sandbox.config.json` の `template` を `create-react-app-typescript` にすることで、
+ブラウザ Sandbox として開かれるように上書きしています。
+
+ブラウザ Sandbox では Vite 本体は動かず、CodeSandbox 内蔵のバンドラが `index.html` と
+`src/main.tsx` を起点にビルドします。そのため次の点に注意してください。
+
+- `vite.config.ts` の設定はブラウザ Sandbox では無視されます (ローカル開発では有効です)。
+- `import.meta.env` など Vite 固有の機能はブラウザ Sandbox では使えません。
+- VM Sandbox として開きたい場合は `sandbox.config.json` を削除してください。
